@@ -1,11 +1,12 @@
 import FileTree from "./components/FileTree";
-import data from "./mockData";
+import SplitPane from "./components/SplitPane";
+import { FileTreeProvider } from "./contexts/FileTreeContext";
 
 const App = () => {
   return (
-    <div>
-      <FileTree data={data} />
-    </div>
+    <FileTreeProvider>
+      <SplitPane left={<FileTree />} right={<div>poop</div>} />
+    </FileTreeProvider>
   );
 };
 

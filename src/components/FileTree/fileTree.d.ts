@@ -1,23 +1,25 @@
+type Node = Directory | File;
+
 export interface File {
   name: string;
   kind: "file";
   size: string;
   modified: string;
+  path?: string;
 }
 
-export interface Folder {
+export interface Directory {
   name: string;
   kind: "directory";
-  children: (Folder | File)[];
+  children: Node[];
 }
 
 export interface TreeNodeProps {
-  node: Folder | File;
+  node: Node;
   level: number;
-  selectedNode: Folder | File | null;
-  onSelect: (node: Folder | File) => void;
 }
 
-export interface FileTreeProps {
-  data: Folder;
+export interface NodeLabelProps {
+  kind: "file" | "directory";
+  level: number;
 }

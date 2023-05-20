@@ -1,23 +1,17 @@
-import React, { useState } from "react";
-import type { FileTreeProps, Folder, File } from "./fileTree";
-import TreeNode from "./TreeNode";
+import TreeNode from "./subComponents/TreeNode";
 
-const FileTree: React.FC<FileTreeProps> = ({ data }) => {
-  const [selectedNode, setSelectedNode] = useState<Folder | File | null>(null);
+import { TreeWrapper } from "./fileTree.styles";
 
-  const handleSelect = (node: Folder | File) => {
-    setSelectedNode(node);
-  };
+import { useContext } from "react";
+import FileTreeContext from "../../contexts/FileTreeContext";
+
+const FileTree = () => {
+  const { head } = useContext(FileTreeContext);
 
   return (
-    <>
-      <TreeNode
-        node={data}
-        level={0}
-        selectedNode={selectedNode}
-        onSelect={handleSelect}
-      />
-    </>
+    <TreeWrapper>
+      <TreeNode node={head} level={0} />
+    </TreeWrapper>
   );
 };
 
