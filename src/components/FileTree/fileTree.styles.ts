@@ -3,8 +3,8 @@ import { NodeLabelProps } from "./fileTree";
 
 export const TreeWrapper = styled.div`
   background-color: var(--black);
-  height: 100vh;
-  padding: 16px;
+  height: calc(100vh - 40px);
+  padding: 8px 16px;
 `;
 
 export const NodeLabel = styled.div<NodeLabelProps>`
@@ -16,8 +16,15 @@ export const NodeLabel = styled.div<NodeLabelProps>`
   font-weight: ${props => (props.kind === "file" ? "thin" : "bold")};
   margin-right: -16px;
   margin-left: -16px;
+  border: 1px solid transparent;
   &:hover {
     background-color: var(--dark-gray);
+  }
+  &.selected {
+    background-color: var(--gray);
+  }
+  &:focus {
+    border-color: var(--green);
   }
 `;
 

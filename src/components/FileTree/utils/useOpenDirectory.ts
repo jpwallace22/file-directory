@@ -1,18 +1,35 @@
-import { useContext, useState } from "react";
-import FileTreeContext from "../../../contexts/FileTreeContext";
+import { useState } from "react";
+import { Node } from "../fileTree";
+import traverseTree from "../../../utils/traverseTree";
 
-const useOpenDirectory = () => {
-  const { allDirOpen, setAllDirOpen } = useContext(FileTreeContext);
-  const [localOpen, setLocalOpen] = useState(allDirOpen.open);
+const useOpenDirectories = () => {
+  const [openDirs, setOpenDirs] = useState<Map<string, number>>(new Map());
 
-  const isOpen = () => (allDirOpen.priority ? allDirOpen.open : localOpen);
-
-  const toggleOpen = () => {
-    setAllDirOpen({ ...allDirOpen, priority: false });
-    setLocalOpen(prev => !prev);
+  const toggleDirOpen = (path: string) => {
+    const newState = new Map(openDirs);
+    if (openDirs.has(path)) {
+      newState.delete(path);
+    } else {
+      newState.set(path, 1);
+    }
+    setOpenDirs(newState);
   };
 
-  return [isOpen, { toggleOpen }] as const;
+  const closeAllDirs = () => {
+    const newState = new Map(openDirs);
+    newState.clear();
+    setOpenDirs(newState);
+  };
+
+  const openAllDirs = (head: Node) => {
+    const newState = new Map(openDirs);
+    traverseTree(head, (_, path) => {
+      newState.set(path, 1);
+    });
+    setOpenDirs(newState);
+  };
+
+  return [openDirs, { toggleDirOpen, closeAllDirs, openAllDirs }] as const;
 };
 
-export default useOpenDirectory;
+export default useOpenDirectories;

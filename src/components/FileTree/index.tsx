@@ -1,18 +1,62 @@
-import TreeNode from "./subComponents/TreeNode";
+import classNames from "classnames";
+import { TreeNodeProps } from "./fileTree";
+import { NodeLabel, NodeTitle } from "./fileTree.styles";
+import getLabelIcon from "./utils/getLabelIcon";
 
-import { TreeWrapper } from "./fileTree.styles";
+const TreeNode: React.FC<TreeNodeProps> = ({
+  node,
+  level,
+  path,
+  openDirs,
+  toggleOpen,
+  selected,
+  setSelected,
+}) => {
+  const isDirectory = node.kind === "directory";
+  const nodePath = path + node.name;
+  const isSelected = node === selected;
+  const isOpen = openDirs?.has(nodePath);
 
-import { useContext } from "react";
-import FileTreeContext from "../../contexts/FileTreeContext";
-
-const FileTree = () => {
-  const { head } = useContext(FileTreeContext);
+  const handleLabelClick = () => {
+    setSelected(node);
+    if (isDirectory) {
+      toggleOpen(nodePath);
+    }
+  };
 
   return (
-    <TreeWrapper>
-      <TreeNode node={head} level={0} />
-    </TreeWrapper>
+    <>
+      <NodeLabel
+        tabIndex={0}
+        onClick={handleLabelClick}
+        onKeyDown={e => e.key === "Enter" && handleLabelClick()}
+        kind={node.kind}
+        level={level}
+        className={classNames({ selected: isSelected })}
+      >
+        <div>{getLabelIcon(node, isOpen)}</div>
+        <NodeTitle>{node.name}</NodeTitle>
+      </NodeLabel>
+      {isDirectory && isOpen && (
+        <>
+          {node.children
+            .sort(child => (child.kind === "directory" ? -1 : 1))
+            .map(child => (
+              <TreeNode
+                key={child.name}
+                node={child}
+                level={level + 1}
+                path={nodePath + "/"}
+                openDirs={openDirs}
+                toggleOpen={toggleOpen}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            ))}
+        </>
+      )}
+    </>
   );
 };
 
-export default FileTree;
+export default TreeNode;

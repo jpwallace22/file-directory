@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { MINIMUM_FILETREE_WIDTH } from "../../../utils/contants";
+import { MINIMUM_FILETREE_WIDTH } from "../../../utils/constants";
 
 const useSplitPane = () => {
   const [dragging, setDragging] = useState(false);
@@ -68,6 +68,7 @@ const useSplitPane = () => {
   return [
     leftWidth,
     {
+      dragging,
       onMouseDown,
       onTouchStart,
       onMouseUp,

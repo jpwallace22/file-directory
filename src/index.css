@@ -9,9 +9,11 @@
   -webkit-text-size-adjust: 100%;
 
   --black: #111111;
+  --white: #edeff0;
   --dark-gray: #1c1c1c;
   --gray: #242424;
   --purple: #40367a;
+  --green: #007173;
 }
 
 body {

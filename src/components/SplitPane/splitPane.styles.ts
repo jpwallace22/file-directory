@@ -25,7 +25,10 @@ export const Divider = styled.div`
   transition: 0s background-color;
   height: 100vh;
   &:hover {
-    background-color: var(--purple);
+    background-color: var(--green);
     transition-delay: 0.5s;
+  }
+  &.dragging {
+    background-color: var(--green);
   }
 `;

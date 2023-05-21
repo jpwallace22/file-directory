@@ -17,6 +17,11 @@ export interface Directory {
 export interface TreeNodeProps {
   node: Node;
   level: number;
+  path: string;
+  selected: Node | null;
+  setSelected: Dispatch<SetStateAction<Node | null>>;
+  openDirs: Map<string, number>;
+  toggleOpen: (path: string) => void;
 }
 
 export interface NodeLabelProps {
