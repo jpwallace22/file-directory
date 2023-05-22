@@ -1,6 +1,7 @@
-import type { Node } from "../fileTree";
-import { ReactComponent as Folder } from "../../../assets/icons/folder.svg";
-import { ReactComponent as OpenFolder } from "../../../assets/icons/folder-opened.svg";
+import type { Node } from '../fileTree';
+
+import { ReactComponent as OpenFolder } from '../../../assets/icons/folder-opened.svg';
+import { ReactComponent as Folder } from '../../../assets/icons/folder.svg';
 
 /**
  * Returns correct icon based on node type and state
@@ -9,12 +10,12 @@ import { ReactComponent as OpenFolder } from "../../../assets/icons/folder-opene
  * @returns JSXElement
  */
 const getLabelIcon = (node: Node, isOpen: boolean) => {
-  if (node.kind === "directory") {
+  if (node.kind === 'directory') {
     return isOpen ? <OpenFolder /> : <Folder />;
   }
 
   // TODO: get better icon for files
-  return "📄";
+  return '📄';
 };
 
 export default getLabelIcon;

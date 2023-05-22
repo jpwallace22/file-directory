@@ -1,4 +1,4 @@
-import { Node, SelectedNode } from "../fileTree";
+import type { Node, SelectedNode } from '../fileTree';
 
 /**
  * Prompts for a name and creates a new node with that name
@@ -6,10 +6,7 @@ import { Node, SelectedNode } from "../fileTree";
  * @param kind file or directory
  * @returns new SelectedNode
  */
-const createNewNode = (
-  directory: string,
-  kind: Node["kind"]
-): SelectedNode | null => {
+const createNewNode = (directory: string, kind: Node['kind']): SelectedNode | null => {
   const nodeName = window.prompt(`New ${kind} name?`);
   if (!nodeName) {
     return null;
@@ -19,14 +16,12 @@ const createNewNode = (
     name: nodeName,
     kind,
     modified: new Date().toString(),
-    size: "0kb",
+    size: '0kb',
     dirPath: directory,
-    nodePath: directory + "/" + nodeName,
+    nodePath: directory + '/' + nodeName,
   };
 
-  return kind === "directory"
-    ? ({ ...baseNode, children: [] } as SelectedNode)
-    : (baseNode as SelectedNode);
+  return kind === 'directory' ? ({ ...baseNode, children: [] } as SelectedNode) : (baseNode as SelectedNode);
 };
 
 export default createNewNode;

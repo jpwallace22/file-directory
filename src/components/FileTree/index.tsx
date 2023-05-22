@@ -1,19 +1,13 @@
-import classNames from "classnames";
-import { TreeNodeProps } from "./fileTree";
-import { NodeLabel, NodeTitle } from "./fileTree.styles";
-import getLabelIcon from "./utils/getLabelIcon";
+import classNames from 'classnames';
 
-const TreeNode: React.FC<TreeNodeProps> = ({
-  node,
-  level,
-  dirPath,
-  openDirs,
-  toggleOpen,
-  selected,
-  setSelected,
-}) => {
-  const isDirectory = node.kind === "directory";
-  const nodePath = dirPath + "/" + node.name;
+import type { TreeNodeProps } from './fileTree';
+
+import { NodeLabel, NodeTitle } from './fileTree.styles';
+import getLabelIcon from './utils/getLabelIcon';
+
+const TreeNode: React.FC<TreeNodeProps> = ({ node, level, dirPath, openDirs, toggleOpen, selected, setSelected }) => {
+  const isDirectory = node.kind === 'directory';
+  const nodePath = dirPath + '/' + node.name;
   const isSelected = nodePath === selected?.nodePath;
   const isOpen = openDirs?.has(nodePath);
   const isRoot = level === -1;
@@ -41,7 +35,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({
         draggable
         tabIndex={0}
         onClick={e => handleLabelClick(e)}
-        onKeyDown={e => e.key === "Enter" && handleLabelClick()}
+        onKeyDown={e => e.key === 'Enter' && handleLabelClick()}
         kind={node.kind}
         level={level}
         className={classNames({ selected: isSelected, root: isRoot })}
@@ -52,7 +46,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({
       {isDirectory && isOpen && (
         <>
           {node.children
-            .sort(child => (child.kind === "directory" ? -1 : 1))
+            .sort(child => (child.kind === 'directory' ? -1 : 1))
             .map(child => (
               <TreeNode
                 key={child.name}

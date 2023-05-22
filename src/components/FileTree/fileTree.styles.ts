@@ -1,5 +1,6 @@
-import { styled } from "styled-components";
-import { NodeLabelProps } from "./fileTree";
+import { styled } from 'styled-components';
+
+import type { NodeLabelProps } from './fileTree';
 
 export const Container = styled.div``;
 
@@ -15,7 +16,7 @@ export const NodeLabel = styled.div<NodeLabelProps>`
   gap: 8px;
   flex-wrap: nowrap;
   padding: 4px 0 4px ${props => 16 + props.level * 8}px;
-  font-weight: ${props => (props.kind === "file" ? "thin" : "bold")};
+  font-weight: ${props => (props.kind === 'file' ? 'thin' : 'bold')};
   margin-right: -16px;
   margin-left: -16px;
   border: 1px solid transparent;

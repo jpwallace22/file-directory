@@ -1,7 +1,9 @@
-import { useState } from "react";
-import { Node } from "../fileTree";
-import traverseTree from "../../../utils/traverseTree";
-import { ROOT_PATH } from "./useFileTree";
+import { useState } from 'react';
+
+import type { Node } from '../fileTree';
+
+import traverseTree from '../../../utils/traverseTree';
+import { ROOT_PATH } from './useFileTree';
 
 const useOpenDirectories = () => {
   const [openDirs, setOpenDirs] = useState<Map<string, number>>(new Map());

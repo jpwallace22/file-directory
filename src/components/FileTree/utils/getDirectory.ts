@@ -1,5 +1,6 @@
-import { SelectedNode } from "../fileTree";
-import { ROOT_PATH } from "../hooks/useFileTree";
+import type { SelectedNode } from '../fileTree';
+
+import { ROOT_PATH } from '../hooks/useFileTree';
 
 /**
  * Returns current selected directory
@@ -11,7 +12,7 @@ export const getBranchDir = (node?: SelectedNode | null) => {
     return ROOT_PATH;
   }
 
-  return node.kind === "directory" ? node.nodePath : node.dirPath;
+  return node.kind === 'directory' ? node.nodePath : node.dirPath;
 };
 
 /**

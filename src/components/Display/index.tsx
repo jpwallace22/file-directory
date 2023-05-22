@@ -1,6 +1,7 @@
-import { FC } from "react";
-import { File } from "../FileTree/fileTree";
-import { DisplayWrapper } from "./display.styles";
+import type { File } from '../FileTree/fileTree';
+import type { FC } from 'react';
+
+import { DisplayWrapper } from './display.styles';
 
 interface DisplayProps {
   openFile?: File | null;

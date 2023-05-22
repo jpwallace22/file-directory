@@ -7,7 +7,7 @@ type SelectedNode = Node & {
 
 export interface File {
   name: string;
-  kind: "file";
+  kind: 'file';
   size: string;
   modified: string;
   path?: string;
@@ -15,7 +15,7 @@ export interface File {
 
 export interface Directory {
   name: string;
-  kind: "directory";
+  kind: 'directory';
   children: Node[];
 }
 
@@ -30,6 +30,6 @@ export interface TreeNodeProps {
 }
 
 export interface NodeLabelProps {
-  kind: "file" | "directory";
+  kind: 'file' | 'directory';
   level: number;
 }
