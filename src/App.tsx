@@ -5,7 +5,6 @@ import useFileTree from "./components/FileTree/hooks/useFileTree";
 import useOpenDirectories from "./components/FileTree/hooks/useOpenDirectory";
 import SplitPane from "./components/SplitPane";
 import UtilityBar from "./components/UtilityBar";
-
 const App = () => {
   const [head, { ...fileTreeUtils }] = useFileTree();
   const [openDirs, { ...allDirUtils }] = useOpenDirectories();
@@ -18,7 +17,7 @@ const App = () => {
           <TreeWrapper onClick={() => fileTreeUtils.setSelected(null)}>
             <FileTree
               dirPath=""
-              level={-1} // remove root from display
+              level={-1} // change root to negative margin
               node={head}
               openDirs={openDirs}
               {...fileTreeUtils}

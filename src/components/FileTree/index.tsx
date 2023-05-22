@@ -16,6 +16,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({
   const nodePath = dirPath + "/" + node.name;
   const isSelected = nodePath === selected?.nodePath;
   const isOpen = openDirs?.has(nodePath);
+  const isRoot = level === -1;
 
   const handleLabelClick = (e?: React.MouseEvent) => {
     if (e) {
@@ -37,14 +38,15 @@ const TreeNode: React.FC<TreeNodeProps> = ({
   return (
     <>
       <NodeLabel
+        draggable
         tabIndex={0}
         onClick={e => handleLabelClick(e)}
         onKeyDown={e => e.key === "Enter" && handleLabelClick()}
         kind={node.kind}
         level={level}
-        className={classNames({ selected: isSelected })}
+        className={classNames({ selected: isSelected, root: isRoot })}
       >
-        <div>{getLabelIcon(node, isOpen)}</div>
+        {!isRoot && <div>{getLabelIcon(node, isOpen)}</div>}
         <NodeTitle>{node.name}</NodeTitle>
       </NodeLabel>
       {isDirectory && isOpen && (

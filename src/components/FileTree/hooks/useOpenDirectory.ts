@@ -7,15 +7,13 @@ const useOpenDirectories = () => {
   const [openDirs, setOpenDirs] = useState<Map<string, number>>(new Map());
 
   const openDir = (path: string) => {
-    const newState = new Map(openDirs);
-    newState.set(path, 1);
-    setOpenDirs(newState);
+    openDirs.set(path, 1);
+    setOpenDirs(openDirs);
   };
 
   const closeDir = (path: string) => {
-    const newState = new Map(openDirs);
-    newState.delete(path);
-    setOpenDirs(newState);
+    openDirs.delete(path);
+    setOpenDirs(openDirs);
   };
 
   const toggleOpen = (path: string) => {

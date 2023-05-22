@@ -14,6 +14,7 @@ const createNewNode = (
   if (!nodeName) {
     return null;
   }
+
   const baseNode = {
     name: nodeName,
     kind,
