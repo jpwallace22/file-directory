@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
+import type { Maybe } from '../../../utils/typeUtils';
 import type { File, Node, SelectedNode } from '../fileTree';
 
 import data from '../../../mockData';
@@ -11,8 +12,8 @@ export const ROOT_PATH = '/' + data.name;
 
 const useFileTree = () => {
   const [head, setHead] = useState<Node>(data);
-  const [selected, setSelected] = useState<SelectedNode | null>(null);
-  const [openFile, setOpenFile] = useState<File | null>(null);
+  const [selected, setSelected] = useState<Maybe<SelectedNode>>(null);
+  const [openFile, setOpenFile] = useState<Maybe<File>>(null);
 
   const addNode = (directory: string, kind: 'file' | 'directory') => {
     const newNode = createNewNode(directory, kind);
@@ -33,10 +34,11 @@ const useFileTree = () => {
   };
 
   const removeNode = useCallback(
-    (directory: string | null, name?: string | null, options?: { overrideConfirmation?: boolean }) => {
+    (directory: Maybe<string>, name?: Maybe<string>, options?: { overrideConfirmation?: boolean }) => {
       if (!name || !directory) {
         return;
       }
+
       if (!options?.overrideConfirmation) {
         const confirm = window.confirm(`Are you sure you want to delete "${name}"?`);
         if (!confirm) {

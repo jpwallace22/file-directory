@@ -1,10 +1,11 @@
+import type { Maybe } from '../../utils/typeUtils';
 import type { File } from '../FileTree/fileTree';
 import type { FC } from 'react';
 
 import { DisplayWrapper } from './display.styles';
 
 interface DisplayProps {
-  openFile?: File | null;
+  openFile?: Maybe<File>;
 }
 
 const Display: FC<DisplayProps> = ({ openFile }) => {

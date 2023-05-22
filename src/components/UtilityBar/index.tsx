@@ -25,13 +25,8 @@ const UtilityBar: FC<UtilityBarProps> = ({
   setSelected,
 }) => {
   const iconSize = 20;
-  const iconStyles = {
-    height: iconSize,
-    width: iconSize,
-    cursor: 'pointer',
-  };
 
-  const handleAdd = (kind: Node['kind']) => {
+  const add = (kind: Node['kind']) => {
     const selectedDir = getBranchDir(selected);
 
     openDir(selectedDir);
@@ -39,20 +34,36 @@ const UtilityBar: FC<UtilityBarProps> = ({
     setSelected(newNode);
   };
 
+  const iconMap = [
+    {
+      image: Collapse,
+      label: 'Collapse All',
+      action: () => closeAllDirs(),
+    },
+    {
+      image: Expand,
+      label: 'Expand All',
+      action: () => openAllDirs(head),
+    },
+    {
+      image: NewFile,
+      label: 'New File',
+      action: () => add('file'),
+    },
+    {
+      image: NewDir,
+      label: 'New Directory',
+      action: () => add('directory'),
+    },
+  ];
+
   return (
     <UtilBarWrapper>
-      <Tooltip label="Collapse All">
-        <Collapse onClick={closeAllDirs} {...iconStyles} />
-      </Tooltip>
-      <Tooltip label="Expand All">
-        <Expand onClick={() => openAllDirs(head)} {...iconStyles} />
-      </Tooltip>
-      <Tooltip label="New File">
-        <NewFile onClick={() => handleAdd('file')} {...iconStyles} />
-      </Tooltip>
-      <Tooltip label="New Directory">
-        <NewDir onClick={() => handleAdd('directory')} {...iconStyles} />
-      </Tooltip>
+      {iconMap.map(icon => (
+        <Tooltip key={icon.label} label={icon.label}>
+          <icon.image onClick={icon.action} height={iconSize} width={iconSize} cursor="pointer" />
+        </Tooltip>
+      ))}
     </UtilBarWrapper>
   );
 };

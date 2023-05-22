@@ -14,7 +14,6 @@ const getLabelIcon = (node: Node, isOpen: boolean) => {
     return isOpen ? <OpenFolder /> : <Folder />;
   }
 
-  // TODO: get better icon for files
   return '📄';
 };
 

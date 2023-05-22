@@ -1,3 +1,5 @@
+import type { Maybe } from '../../utils/typeUtils';
+
 type Node = Directory | File;
 
 type SelectedNode = Node & {
@@ -23,13 +25,13 @@ export interface TreeNodeProps {
   node: Node;
   level: number;
   dirPath: string;
-  selected: SelectedNode | null;
-  setSelected: Dispatch<SetStateAction<SelectedNode | null>>;
+  selected: Maybe<SelectedNode>;
+  setSelected: Dispatch<SetStateAction<Maybe<SelectedNode>>>;
   openDirs: Map<string, number>;
   toggleOpen: (path: string) => void;
 }
 
 export interface NodeLabelProps {
-  kind: 'file' | 'directory';
+  kind: Node['kind'];
   level: number;
 }

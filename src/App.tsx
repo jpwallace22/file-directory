@@ -17,7 +17,7 @@ const App = () => {
           <TreeWrapper onClick={() => fileTreeUtils.setSelected(null)}>
             <FileTree
               dirPath=""
-              level={-1} // change root to negative margin
+              level={-1} // set to -1 so root has negative margin
               node={head}
               openDirs={openDirs}
               {...fileTreeUtils}

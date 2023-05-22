@@ -1,21 +1,20 @@
 import classNames from 'classnames';
 
 import type { TreeNodeProps } from './fileTree';
+import type { FC, MouseEvent } from 'react';
 
 import { NodeLabel, NodeTitle } from './fileTree.styles';
 import getLabelIcon from './utils/getLabelIcon';
 
-const TreeNode: React.FC<TreeNodeProps> = ({ node, level, dirPath, openDirs, toggleOpen, selected, setSelected }) => {
+const TreeNode: FC<TreeNodeProps> = ({ node, level, dirPath, openDirs, toggleOpen, selected, setSelected }) => {
   const isDirectory = node.kind === 'directory';
   const nodePath = dirPath + '/' + node.name;
   const isSelected = nodePath === selected?.nodePath;
   const isOpen = openDirs?.has(nodePath);
   const isRoot = level === -1;
 
-  const handleLabelClick = (e?: React.MouseEvent) => {
-    if (e) {
-      e.stopPropagation();
-    }
+  const handleClick = (e?: MouseEvent) => {
+    e?.stopPropagation();
 
     const selectedNode = {
       ...node,
@@ -34,8 +33,8 @@ const TreeNode: React.FC<TreeNodeProps> = ({ node, level, dirPath, openDirs, tog
       <NodeLabel
         draggable
         tabIndex={0}
-        onClick={e => handleLabelClick(e)}
-        onKeyDown={e => e.key === 'Enter' && handleLabelClick()}
+        onClick={e => handleClick(e)}
+        onKeyDown={e => e.key === 'Enter' && handleClick()}
         kind={node.kind}
         level={level}
         className={classNames({ selected: isSelected, root: isRoot })}

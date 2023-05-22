@@ -1,3 +1,5 @@
+// Added consts on `kind` for added type safety
+
 const data = {
   name: 'project',
   kind: 'directory' as const,

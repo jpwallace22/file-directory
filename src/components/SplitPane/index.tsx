@@ -1,12 +1,15 @@
-
-
 import classNames from 'classnames';
 
-import type { SplitPaneProps } from './splitPane';
-import type { FC } from 'react';
+import type { FC, ReactNode } from 'react';
 
 import { Divider, FlexWrapper, LeftPane, RightPane } from './splitPane.styles';
-import useSplitPane from './uitls/useSplitPane';
+import useSplitPane from './utils/useSplitPane';
+
+export interface SplitPaneProps {
+  className?: string;
+  left: ReactNode;
+  right: ReactNode;
+}
 
 const SplitPane: FC<SplitPaneProps> = ({ left, right }) => {
   const [leftWidth, dragging, { ...mouseActions }] = useSplitPane();

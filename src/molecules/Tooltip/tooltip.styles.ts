@@ -2,13 +2,11 @@ import { styled } from 'styled-components';
 
 export const TooltipStyles = styled.div`
   position: relative;
-  transition-delay: 1s;
   &::after {
     left: 50%;
     opacity: 0;
     position: absolute;
     z-index: -100;
-    transition-delay: 1s;
   }
 
   &:hover::after,
@@ -16,7 +14,6 @@ export const TooltipStyles = styled.div`
     opacity: 1;
     transform: scale(1) translateY(0);
     z-index: 1000;
-    transition-delay: 1s;
   }
 
   &::after {
