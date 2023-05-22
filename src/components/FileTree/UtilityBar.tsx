@@ -1,6 +1,5 @@
-import type { Node } from '../FileTree/fileTree';
-import type { UseFileTreeUtils } from '../FileTree/hooks/useFileTree';
-import type { UseOpenDirUtils } from '../FileTree/hooks/useOpenDirectory';
+import type { Node } from './fileTree';
+import type { UseFileTreeUtils } from './hooks/useFileTree';
 import type { FC } from 'react';
 
 import { ReactComponent as Collapse } from '../../assets/icons/collapse-all.svg';
@@ -8,10 +7,10 @@ import { ReactComponent as Expand } from '../../assets/icons/expand-all.svg';
 import { ReactComponent as NewFile } from '../../assets/icons/new-file.svg';
 import { ReactComponent as NewDir } from '../../assets/icons/new-folder.svg';
 import Tooltip from '../../molecules/Tooltip';
-import { getBranchDir } from '../FileTree/utils/getDirectory';
-import { UtilBarWrapper } from './utilityBar.styles';
+import { UtilBarWrapper } from './fileTree.styles';
+import { getBranchDir } from './utils/getDirectory';
 
-interface UtilityBarProps extends UseOpenDirUtils, UseFileTreeUtils {
+interface UtilityBarProps extends UseFileTreeUtils {
   head: Node;
 }
 

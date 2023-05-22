@@ -1,67 +1,24 @@
-import classNames from 'classnames';
+import type { FileTreeProps } from './fileTree';
+import type { FC } from 'react';
 
-import type { TreeNodeProps } from './fileTree';
-import type { FC, MouseEvent } from 'react';
+import { TreeWrapper } from './fileTree.styles';
+import TreeNode from './TreeNode';
+import UtilityBar from './UtilityBar';
 
-import { NodeLabel, NodeTitle } from './fileTree.styles';
-import getLabelIcon from './utils/getLabelIcon';
-
-const TreeNode: FC<TreeNodeProps> = ({ node, level, dirPath, openDirs, toggleOpen, selected, setSelected }) => {
-  const isDirectory = node.kind === 'directory';
-  const nodePath = dirPath + '/' + node.name;
-  const isSelected = nodePath === selected?.nodePath;
-  const isOpen = openDirs?.has(nodePath);
-  const isRoot = level === -1;
-
-  const handleClick = (e?: MouseEvent) => {
-    e?.stopPropagation();
-
-    const selectedNode = {
-      ...node,
-      dirPath,
-      nodePath,
-    };
-
-    setSelected(selectedNode);
-    if (isDirectory) {
-      toggleOpen(nodePath);
-    }
-  };
-
+const FileTree: FC<FileTreeProps> = props => {
   return (
     <>
-      <NodeLabel
-        draggable
-        tabIndex={0}
-        onClick={e => handleClick(e)}
-        onKeyDown={e => e.key === 'Enter' && handleClick()}
-        kind={node.kind}
-        level={level}
-        className={classNames({ selected: isSelected, root: isRoot })}
-      >
-        {!isRoot && <div>{getLabelIcon(node, isOpen)}</div>}
-        <NodeTitle>{node.name}</NodeTitle>
-      </NodeLabel>
-      {isDirectory && isOpen && (
-        <>
-          {node.children
-            .sort(child => (child.kind === 'directory' ? -1 : 1))
-            .map(child => (
-              <TreeNode
-                key={child.name}
-                node={child}
-                level={level + 1}
-                dirPath={nodePath}
-                openDirs={openDirs}
-                toggleOpen={toggleOpen}
-                selected={selected}
-                setSelected={setSelected}
-              />
-            ))}
-        </>
-      )}
+      <UtilityBar {...props} />
+      <TreeWrapper onClick={() => props.setSelected(null)}>
+        <TreeNode
+          dirPath=""
+          level={-1} // set to -1 so root has negative margin
+          node={props.head}
+          {...props}
+        />
+      </TreeWrapper>
     </>
   );
 };
 
-export default TreeNode;
+export default FileTree;

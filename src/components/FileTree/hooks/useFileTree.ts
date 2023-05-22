@@ -14,6 +14,39 @@ const useFileTree = () => {
   const [head, setHead] = useState<Node>(data);
   const [selected, setSelected] = useState<Maybe<SelectedNode>>(null);
   const [openFile, setOpenFile] = useState<Maybe<File>>(null);
+  const [openDirs, setOpenDirs] = useState<Map<string, number>>(new Map());
+
+  const openDir = (path: string) => {
+    openDirs.set(path, 1);
+    setOpenDirs(openDirs);
+  };
+
+  const closeDir = (path: string) => {
+    openDirs.delete(path);
+    setOpenDirs(openDirs);
+  };
+
+  const toggleOpen = (path: string) => {
+    if (openDirs.has(path)) {
+      closeDir(path);
+    } else {
+      openDir(path);
+    }
+  };
+
+  const closeAllDirs = () => {
+    const newState = new Map(openDirs);
+    newState.clear();
+    setOpenDirs(newState);
+  };
+
+  const openAllDirs = (head: Node) => {
+    const newState = new Map(openDirs);
+    traverseTree(head, (_, path) => {
+      newState.set(path, 1);
+    });
+    setOpenDirs(newState);
+  };
 
   const addNode = (directory: string, kind: 'file' | 'directory') => {
     const newNode = createNewNode(directory, kind);
@@ -81,9 +114,13 @@ const useFileTree = () => {
     };
   }, [selected, deleteNode]);
 
-  return [head, { openFile, selected, setSelected, addNode, removeNode }] as const;
+  return [
+    head,
+    new Map([[ROOT_PATH, 1], ...openDirs]),
+    { openFile, selected, setSelected, addNode, removeNode, openDir, closeDir, toggleOpen, closeAllDirs, openAllDirs },
+  ] as const;
 };
 
-export type UseFileTreeUtils = ReturnType<typeof useFileTree>[1];
+export type UseFileTreeUtils = ReturnType<typeof useFileTree>[2];
 
 export default useFileTree;

@@ -1,4 +1,6 @@
 import type { Maybe } from '../../utils/typeUtils';
+import type { UseFileTreeUtils } from './hooks/useFileTree';
+import type { UseOpenDirUtils } from './hooks/useOpenDirectory';
 
 type Node = Directory | File;
 
@@ -34,4 +36,9 @@ export interface TreeNodeProps {
 export interface NodeLabelProps {
   kind: Node['kind'];
   level: number;
+}
+
+export interface FileTreeProps extends UseFileTreeUtils, UseOpenDirUtils {
+  head: Node;
+  openDirs: Map<string, number>;
 }
