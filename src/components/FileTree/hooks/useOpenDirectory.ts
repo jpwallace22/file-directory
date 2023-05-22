@@ -1,18 +1,29 @@
 import { useState } from "react";
 import { Node } from "../fileTree";
 import traverseTree from "../../../utils/traverseTree";
+import { ROOT_PATH } from "./useFileTree";
 
 const useOpenDirectories = () => {
   const [openDirs, setOpenDirs] = useState<Map<string, number>>(new Map());
 
-  const toggleDirOpen = (path: string) => {
+  const openDir = (path: string) => {
     const newState = new Map(openDirs);
-    if (openDirs.has(path)) {
-      newState.delete(path);
-    } else {
-      newState.set(path, 1);
-    }
+    newState.set(path, 1);
     setOpenDirs(newState);
+  };
+
+  const closeDir = (path: string) => {
+    const newState = new Map(openDirs);
+    newState.delete(path);
+    setOpenDirs(newState);
+  };
+
+  const toggleOpen = (path: string) => {
+    if (openDirs.has(path)) {
+      closeDir(path);
+    } else {
+      openDir(path);
+    }
   };
 
   const closeAllDirs = () => {
@@ -29,7 +40,12 @@ const useOpenDirectories = () => {
     setOpenDirs(newState);
   };
 
-  return [openDirs, { toggleDirOpen, closeAllDirs, openAllDirs }] as const;
+  return [
+    new Map([[ROOT_PATH, 1], ...openDirs]),
+    { openDir, closeDir, toggleOpen, closeAllDirs, openAllDirs },
+  ] as const;
 };
+
+export type UseOpenDirUtils = ReturnType<typeof useOpenDirectories>[1];
 
 export default useOpenDirectories;

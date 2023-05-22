@@ -15,7 +15,7 @@ export const TooltipStyles = styled.div`
   &:focus::after {
     opacity: 1;
     transform: scale(1) translateY(0);
-    z-index: 100;
+    z-index: 1000;
     transition-delay: 1s;
   }
 

@@ -3,14 +3,14 @@ import { Node } from "../components/FileTree/fileTree";
 const traverseTree = (
   node: Node,
   callback: (node: Node, path: string) => void,
-  path = "/"
+  path = ""
 ) => {
-  callback(node, path.slice(0, -1));
+  callback(node, path);
 
   if ("children" in node) {
     for (const childNode of node.children) {
-      const nodePath = path + node.name;
-      traverseTree(childNode, callback, nodePath + "/");
+      const nodePath = path + "/" + node.name;
+      traverseTree(childNode, callback, nodePath);
     }
   }
 

@@ -1,33 +1,33 @@
 import Display from "./components/Display";
 import FileTree from "./components/FileTree";
 import { TreeWrapper } from "./components/FileTree/fileTree.styles";
-import useFileTree from "./components/FileTree/utils/useFileTree";
-import useOpenDirectories from "./components/FileTree/utils/useOpenDirectory";
+import useFileTree from "./components/FileTree/hooks/useFileTree";
+import useOpenDirectories from "./components/FileTree/hooks/useOpenDirectory";
 import SplitPane from "./components/SplitPane";
 import UtilityBar from "./components/UtilityBar";
 
 const App = () => {
-  const [head, { openFile, ...selectedUtils }] = useFileTree();
-  const [openDirs, { toggleDirOpen, ...allDirUtils }] = useOpenDirectories();
+  const [head, { ...fileTreeUtils }] = useFileTree();
+  const [openDirs, { ...allDirUtils }] = useOpenDirectories();
 
   return (
     <SplitPane
       left={
         <>
-          <UtilityBar head={head} {...allDirUtils} />
-          <TreeWrapper>
+          <UtilityBar head={head} {...fileTreeUtils} {...allDirUtils} />
+          <TreeWrapper onClick={() => fileTreeUtils.setSelected(null)}>
             <FileTree
-              path="/"
-              level={0}
+              dirPath=""
+              level={-1} // remove root from display
               node={head}
-              toggleOpen={toggleDirOpen}
               openDirs={openDirs}
-              {...selectedUtils}
+              {...fileTreeUtils}
+              {...allDirUtils}
             />
           </TreeWrapper>
         </>
       }
-      right={<Display openFile={openFile} />}
+      right={<Display openFile={fileTreeUtils.openFile} />}
     />
   );
 };

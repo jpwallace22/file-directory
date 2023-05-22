@@ -1,5 +1,10 @@
 type Node = Directory | File;
 
+type SelectedNode = Node & {
+  dirPath: string;
+  nodePath: string;
+};
+
 export interface File {
   name: string;
   kind: "file";
@@ -17,9 +22,9 @@ export interface Directory {
 export interface TreeNodeProps {
   node: Node;
   level: number;
-  path: string;
-  selected: Node | null;
-  setSelected: Dispatch<SetStateAction<Node | null>>;
+  dirPath: string;
+  selected: SelectedNode | null;
+  setSelected: Dispatch<SetStateAction<SelectedNode | null>>;
   openDirs: Map<string, number>;
   toggleOpen: (path: string) => void;
 }

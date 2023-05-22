@@ -6,19 +6,29 @@ import getLabelIcon from "./utils/getLabelIcon";
 const TreeNode: React.FC<TreeNodeProps> = ({
   node,
   level,
-  path,
+  dirPath,
   openDirs,
   toggleOpen,
   selected,
   setSelected,
 }) => {
   const isDirectory = node.kind === "directory";
-  const nodePath = path + node.name;
-  const isSelected = node === selected;
+  const nodePath = dirPath + "/" + node.name;
+  const isSelected = nodePath === selected?.nodePath;
   const isOpen = openDirs?.has(nodePath);
 
-  const handleLabelClick = () => {
-    setSelected(node);
+  const handleLabelClick = (e?: React.MouseEvent) => {
+    if (e) {
+      e.stopPropagation();
+    }
+
+    const selectedNode = {
+      ...node,
+      dirPath,
+      nodePath,
+    };
+
+    setSelected(selectedNode);
     if (isDirectory) {
       toggleOpen(nodePath);
     }
@@ -28,7 +38,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({
     <>
       <NodeLabel
         tabIndex={0}
-        onClick={handleLabelClick}
+        onClick={e => handleLabelClick(e)}
         onKeyDown={e => e.key === "Enter" && handleLabelClick()}
         kind={node.kind}
         level={level}
@@ -46,7 +56,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({
                 key={child.name}
                 node={child}
                 level={level + 1}
-                path={nodePath + "/"}
+                dirPath={nodePath}
                 openDirs={openDirs}
                 toggleOpen={toggleOpen}
                 selected={selected}
